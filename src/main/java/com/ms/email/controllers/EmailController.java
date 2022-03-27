@@ -4,6 +4,8 @@ package com.ms.email.controllers;
 import com.ms.email.dtos.EmailDto;
 import com.ms.email.models.EmailModel;
 import com.ms.email.services.EmailService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,12 +21,15 @@ import java.util.Optional;
 import java.util.UUID;
 
 @RestController
+@Api(value="API REST E-mails")
+@CrossOrigin(origins="*")
 public class EmailController {
 
     @Autowired
     EmailService emailService;
 
     @PostMapping("/sending-email")
+    @ApiOperation(value="Send an e-mail from one source to another")
     public ResponseEntity<EmailModel> sendingEmail(@RequestBody @Valid EmailDto emailDto) {
         EmailModel emailModel = new EmailModel();
         BeanUtils.copyProperties(emailDto, emailModel);
@@ -33,11 +38,13 @@ public class EmailController {
     }
 
     @GetMapping("/emails")
+    @ApiOperation(value="Return all the sent e-mails ")
     public ResponseEntity<Page<EmailModel>> getAllEmails(@PageableDefault(page = 0, size = 5, sort = "emailId", direction = Sort.Direction.DESC) Pageable pageable){
         return new ResponseEntity<>(emailService.findAll(pageable), HttpStatus.OK);
     }
 
     @GetMapping("/emails/{emailId}")
+    @ApiOperation(value="Return all the sent e-mails ")
     public ResponseEntity<Object> getOneEmail(@PathVariable(value="emailId") UUID emailId){
         Optional<EmailModel> emailModelOptional = emailService.findById(emailId);
         if(!emailModelOptional.isPresent()) {
