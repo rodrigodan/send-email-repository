@@ -1,0 +1,48 @@
+<section class="section-sign-in">
+  <div class="header-signin">
+    <h2 class="universal-color">Log in</h2>
+    <h5 class="universal-color">Get started planning your sprint:</h5>
+
+    <form [formGroup]="signIn" (ngSubmit)="login()" class="login-form">
+      <div formGroupName="emailGroup" class="group">
+        <label class="form-label" for="Email">E-mail: </label>
+        <input pInputText id="Email" type="text" formControlName="email" />
+      </div>
+
+      <div formGroupName="passwordGroup" class="group">
+        <label class="form-label" for="password">Password: </label>
+        <input
+          pInputText
+          id="password"
+          type="password"
+          formControlName="password"
+        />
+      </div>
+      <div class="login-button">
+        <p-button
+          label="login"
+          icon="pi pi-check"
+          size="small"
+          [disabled]="!signIn.valid"
+          [type]="'submit'"
+          class="login-button-item"
+          severity="success"
+        >
+        </p-button>
+      </div>
+      <h3 class="orElement">Or</h3>
+      <div class="signup-button">
+        <p-button
+          label="SignUp"
+          icon="pi pi-check"
+          size="small"
+          class="signup-button-item"
+          [outlined]="true"
+          severity="success"
+          (click)="subscribe()"
+        >
+        </p-button>
+      </div>
+    </form>
+  </div>
+</section>
